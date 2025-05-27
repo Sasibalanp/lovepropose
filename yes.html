@@ -1,23 +1,95 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8">
   <title>Congratulations My Wife!</title>
   <style>
-    body { background: #fff0f5; text-align: center; font-family: 'Segoe UI', sans-serif; }
-    h1 { color: #e60073; margin-top: 80px; font-size: 42px; }
-    p { font-size: 20px; color: #800000; padding: 10px; }
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to bottom right, #fceabb, #f8b500);
+      text-align: center;
+      padding: 40px;
+      color: #444;
+    }
+    h1 {
+      font-size: 36px;
+      color: #c0392b;
+    }
     .quote {
       font-style: italic;
+      margin: 20px 0;
+      color: #8e44ad;
+      font-size: 20px;
+    }
+    img {
       margin-top: 20px;
-      color: #cc3366;
+      border-radius: 20px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    }
+    button {
+      margin-top: 30px;
+      padding: 12px 24px;
+      font-size: 18px;
+      background-color: #e84393;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #d63031;
+    }
+    #downloadLink {
+      display: block;
+      margin-top: 20px;
+      font-size: 16px;
+      color: #2d3436;
+      text-decoration: underline;
     }
   </style>
 </head>
 <body>
-  <h1>Congratulations My Wife!</h1>
-  <p>You said YES! 💍</p>
+  <h1>Congratulations My Wife! 💖</h1>
+  <p>You said YES! I’m the luckiest person alive.</p>
   <div class="quote">"Forever is just the beginning with you."</div>
   <div class="quote">"You complete me in ways I never imagined."</div>
   <div class="quote">"Every love story is beautiful, but ours is my favorite."</div>
+
+  <!-- Wedding GIF -->
   <img src="Wedding.gif" width="300" alt="Wedding gif">
+
+  <hr style="margin: 40px 0;">
+
+  <h2>Capture This Beautiful Moment 📸</h2>
+  <video id="video" width="300" autoplay></video>
+  <br>
+  <button onclick="takePhoto()">📸 Capture Photo</button>
+  <br>
+  <canvas id="canvas" width="300" height="225" style="display:none;"></canvas>
+  <a id="downloadLink" download="Yes-Moment.png">Download Your Yes Moment 💌</a>
+
+  <script>
+    const video = document.getElementById('video');
+    const canvas = document.getElementById('canvas');
+    const downloadLink = document.getElementById('downloadLink');
+
+    // Start webcam
+    navigator.mediaDevices.getUserMedia({ video: true })
+      .then(stream => {
+        video.srcObject = stream;
+      })
+      .catch(err => {
+        alert("Could not access your camera 😢");
+        console.error(err);
+      });
+
+    function takePhoto() {
+      const ctx = canvas.getContext('2d');
+      canvas.style.display = 'block';
+      ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+      const dataURL = canvas.toDataURL('image/png');
+      downloadLink.href = dataURL;
+    }
+  </script>
 </body>
 </html>
